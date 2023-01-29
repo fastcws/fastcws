@@ -1,0 +1,16 @@
+[submodule "assets"]
+	path = assets
+	url = https://github.com/fastcws/assets
+[submodule "external/boost_containers"]
+	path = external/boost_containers
+	url = https://github.com/fastcws/boost_containers
+[submodule "external/zlib"]
+	path = external/zlib
+	url = https://github.com/madler/zlib
+	ignore = dirty
+[submodule "external/gtest"]
+	path = external/gtest
+	url = https://github.com/google/googletest
+[submodule "external/nowide"]
+	path = external/nowide
+	url = https://github.com/boostorg/nowide

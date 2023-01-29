@@ -1,0 +1,7 @@
+/build
+/compile_commands.json
+/.clangd
+__pycache__
+/docs
+/.cache
+
