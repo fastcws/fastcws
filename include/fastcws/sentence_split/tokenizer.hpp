@@ -80,6 +80,9 @@ struct istream_tokenizer {
 		std::array<char, ChunkSize> buffer;
 		(void)is_.peek();
 		size_t sz = std::min<size_t>(buffer.size(), is_.rdbuf()->in_avail());
+		if (!is_.eof() && sz == 0) { // for impl which doesn't support rdbuf()->in_avail()
+			sz = 1;
+		}
 		is_.read(buffer.data(), sz);
 		tok_.process(std::string_view{buffer.data(), sz});
 		if (is_.eof()) {
