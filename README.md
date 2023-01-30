@@ -2,6 +2,13 @@
 
 *轻量级高性能中文分词项目*
 
+## 动图演示
+
+<img src="doc/resource/fastcws_demo_short.gif" width="300" />
+<img src="doc/resource/fastcws_demo_big.gif" width="300" />
+
+如标题所言，`fastcws`性能极高。从动图中可以看出，`fastcws`冷启动加载只用了 0.125s；冷启动加上分词 18 万字只用了 0.35s。简单估算一下，已经达到了*单核百万字*的水准！
+
 ## 命令行工具
 
 `fastcws`命令行工具（从源码编译的话，位于`src/tools/fastcws`）可以直接将`stdin`的输入按句分词后输出到`stdout`：
