@@ -11,7 +11,27 @@ enum class errc : int {
 	io_error = -2,
 	bad_encoding = -3,
 	overflow_error = -4,
+
+	// marks the minium valid errc
+	last_errc = -4
 };
+
+namespace details {
+
+inline constexpr const char *const error_messages[] = {
+	//  0
+	"no error",
+	// -1 = errc::internal_error
+	"irrecoverable, unexpected internal error",
+	// -2 = errc::io_error
+	"file i/o failed",
+	// -3 = errc::bad_encoding
+	"input is not a valid utf-8 sequence",
+	// -4 = errc::overflow_error
+	"attempting to access an object beyong its limit"
+};
+
+}
 
 struct error_category : std::error_category
 {
@@ -20,18 +40,10 @@ struct error_category : std::error_category
 	}
 
 	std::string message(int ev) const override {
-		switch (static_cast<errc>(ev)) {
-			case errc::internal_error:
-				return "irrecoverable, unexpected internal error";
-			case errc::io_error:
-				return "file i/o failed";
-			case errc::bad_encoding:
-				return "input is not a valid utf-8 sequence";
-			case errc::overflow_error:
-				return "attempting to access an object beyong its limit";
-			default:
-				return "undefined error code";
+		if ((ev < static_cast<int>(errc::last_errc)) || (ev > 0)) {
+			return "undefined error code";
 		}
+		return std::string{details::error_messages[-ev]};
 	}
 };
 
