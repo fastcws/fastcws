@@ -8,8 +8,6 @@
 #include "fastcws.hpp"
 #include "fastcws_defaults.hpp"
 
-std::vector<char> err_buffer;
-
 extern "C" {
 
 #define FASTCWS_EXPORTING
@@ -127,15 +125,10 @@ void fastcws_result_free(fastcws_result* result) {
 }
 
 const char* fastcws_strerr(int err) {
-	err_buffer.resize(0);
-	std::string str = fastcws::make_error_code(static_cast<fastcws::errc>(err)).message();
-	std::copy(
-		str.cbegin(),
-		str.cend(),
-		std::back_inserter(err_buffer)
-	);
-	err_buffer.push_back('\0');
-	return err_buffer.data();
+	if ((err > 0) || (err < static_cast<int>(fastcws::errc::last_errc))) {
+		return "invalid error code";
+	}
+	return fastcws::details::error_messages[-err];
 }
 
 }
