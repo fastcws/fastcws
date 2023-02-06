@@ -1,0 +1,78 @@
+name: build
+
+on: [ push, pull_request ]
+
+jobs:
+  build-linux-x64:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        build_type: [ Debug, Release ]
+
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: build
+      run: ./ci/build-ubuntu.sh
+
+    - name: upload_artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        path: ./output/*
+
+  build-windows-x64:
+    runs-on: windows-2019
+
+    strategy:
+      matrix:
+        build_type: [ Debug, Release ]
+
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: build
+      env:
+        GITHUB_SHA: ${{ github.sha }}
+      run: ci/build-win.bat
+
+    - name: upload_artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        path: ./output/*
+
+  build-darwin-x64:
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        build_type: [ Debug, Release ]
+
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: build
+      run: ./ci/build-darwin.sh
+
+    - name: upload_artifact
+      uses: actions/upload-artifact@v2.2.3
+      with:
+        path: ./output/*

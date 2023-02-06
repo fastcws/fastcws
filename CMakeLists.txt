@@ -8,7 +8,7 @@ set(FASTCWS_LINKER_FLAGS "")
 
 option(FASTCWS_STATIC_STL "Link STL statically. If off, you need to install STL runtime to use the compiled progs & dyn libs." ON)
 if (FASTCWS_STATIC_STL)
-	if (CMAKE_CXX_COMPILER_ID MATCHES "^(Clang|GNU)$")
+	if ((CMAKE_CXX_COMPILER_ID MATCHES "^(Clang|GNU)$") AND (NOT CMAKE_SYSTEM_NAME MATCHES "Darwin"))
 		list(APPEND FASTCWS_LINKER_FLAGS -static-libgcc -static-libstdc++)
 	elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
