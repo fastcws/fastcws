@@ -6,8 +6,7 @@
 	url = https://github.com/fastcws/boost_containers
 [submodule "external/zlib"]
 	path = external/zlib
-	url = https://github.com/madler/zlib
-	ignore = dirty
+	url = https://github.com/fastcws/zlib
 [submodule "external/gtest"]
 	path = external/gtest
 	url = https://github.com/google/googletest
